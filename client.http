@@ -1,16 +1,17 @@
-GET http://localhost:3000
+GET http://localhost:3000/
 
 ###
 POST http://localhost:3000/login
 Content-Type: application/json
 
 {
-    "username": "kang",
+    "username": "john",
     "password":"123456"
 }
 
 ###
 GET http://localhost:3000/Bye
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpvaG4iLCJwYXNzd29yZCI6IjEyMzQ1NiIsIm5hbWUiOiJKb2huIiwiZW1haWwiOiJqb2huQHN0dWRlbnQudXRlbS5lZHUubXkiLCJpYXQiOjE2ODEzNzE0NDUsImV4cCI6MTY4MTM3MTUwNX0.yg8ujd0eLJaYAv1SvZDagpnAD3nuvydnk2Vp-3EUZcw
 
 
 ###

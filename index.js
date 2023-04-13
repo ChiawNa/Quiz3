@@ -40,8 +40,32 @@ function register(reqUsername,reqPassword,reqName,reqEmail){
   })
 }
 
+const jwt = require('jsonwebtoken');
+function generateToken(userData){
+  const token = jwt.sign(
+    userData,
+    'inipassword',
+    { expiresIn: 60 }
+  );
+  return token
+}
 
+function verityToken(req, res, next){
+  let header = req.headers.authorization
+  console.log(header)
 
+  let token = header.split(' ')[1]
+
+  jwt.verify(token, 'inipassword', function(err, decoded){
+    if(err){
+      res.send("Invalid Token")
+    }
+
+    req.user = decoded
+    next()
+  });
+}
+      
 const express = require('express')
 const app = express()
 const port = 3000
@@ -53,16 +77,13 @@ app.post('/login', (req, res) => {
 
   let result=login(req.body.username, req.body.password)
 
-  res.send(result)
+  let token = generateToken(result)
+  res.send(token)
 })
 
-//app.get('/', (req, res) => {
-//  res.send('Hello UTeM!')
-//})
-
-//app.get('/Bye', (req, res) => {
-//   res.send('Bye Bye UTeM!')
-//  })
+app.get('/Bye', verityToken, (req, res, next) => {
+  res.send('Bye UTeM!')
+})
 
 app.post('/register', (req, res) => {
   let result = register(
